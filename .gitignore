@@ -1,0 +1,14 @@
+# Sensitive credentials
+.env
+
+# Local database
+*.db
+alber_school.db
+
+# Python environment
+venv/
+__pycache__/
+*.pyc
+
+# OS files
+.DS_Store

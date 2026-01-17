@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alber School Kutus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <style>
+        .htmx-indicator { display: none; }
+        .htmx-request .htmx-indicator { display: block; }
+        .htmx-request.htmx-indicator { display: block; }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen">
+
+    <nav class="bg-blue-900 text-white shadow-lg">
+        <div class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="/" class="text-2xl font-bold flex items-center">
+                <span class="mr-2">🏫</span> Alber School
+            </a>
+            <div class="space-x-6 hidden md:flex">
+                <a href="/" class="hover:text-blue-200 transition">Home</a>
+                <a href="/admission" class="hover:text-blue-200 transition">Admission</a>
+                <a href="/students" class="hover:text-blue-200 transition">Students</a>
+                <a href="/pay-fees" class="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition">Pay Fees</a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mx-auto px-4 py-10">
+        {% block content %}{% endblock %}
+    </main>
+
+    <footer class="bg-white border-t mt-20 py-8">
+        <div class="text-center text-gray-500 text-sm">
+            &copy; 2026 Alber School Kutus. Next to Governor's Office. All Rights Reserved.
+        </div>
+    </footer>
+
+</body>
+</html>

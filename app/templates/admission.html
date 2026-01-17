@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+    <title>Alber School - Student Admission</title>
+</head>
+<body class="bg-slate-50 font-sans">
+    <div class="max-w-md mx-auto mt-10 p-6">
+        <div class="text-center mb-8">
+            <h2 class="text-2xl font-bold text-[#003366]">Alber School Kutus</h2>
+            <p class="text-gray-500">New Student Admission Form</p>
+        </div>
+
+        <div class="bg-white p-8 rounded-2xl shadow-lg border-t-4 border-[#FFD700]">
+            <form hx-post="/admission" hx-target="#response-message" class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Student Full Name</label>
+                    <input type="text" name="full_name" required 
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-[#003366] focus:border-[#003366]">
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">CBC Grade (1-9)</label>
+                    <select name="cbc_grade" class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                        <option value="1">Grade 1</option>
+                        <option value="2">Grade 2</option>
+                        <option value="3">Grade 3</option>
+                        <option value="4">Grade 4</option>
+                        <option value="5">Grade 5</option>
+                        <option value="6">Grade 6</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Parent Phone (254...)</label>
+                    <input type="text" name="parent_phone" placeholder="254700000000" required
+                        class="mt-1 block w-full border border-gray-300 rounded-md p-2">
+                </div>
+
+                <button type="submit" 
+                    class="w-full bg-[#003366] text-white font-bold py-2 px-4 rounded-md hover:bg-blue-900 transition duration-300">
+                    Register Student
+                </button>
+            </form>
+
+            <div id="response-message" class="mt-4"></div>
+        </div>
+    </div>
+</body>
+</html>
