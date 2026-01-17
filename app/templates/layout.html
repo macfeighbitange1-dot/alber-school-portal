@@ -3,38 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alber School Kutus</title>
+    <title>Alber School Kutus | CBC Excellence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/htmx.org@1.9.10"></script>
     <style>
+        /* Smooth transitions for HTMX loading states */
         .htmx-indicator { display: none; }
-        .htmx-request .htmx-indicator { display: block; }
-        .htmx-request.htmx-indicator { display: block; }
+        .htmx-request .htmx-indicator { display: flex; }
+        .htmx-request.htmx-indicator { display: flex; }
+        
+        /* Custom scrollbar for a premium feel */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f1f1f1; }
+        ::-webkit-scrollbar-thumb { background: #1e3a8a; border-radius: 10px; }
     </style>
 </head>
-<body class="bg-slate-50 min-h-screen">
+<body class="bg-slate-50 min-h-screen flex flex-col">
 
-    <nav class="bg-blue-900 text-white shadow-lg">
+    <nav class="bg-blue-900 text-white shadow-xl sticky top-0 z-50">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-            <a href="/" class="text-2xl font-bold flex items-center">
-                <span class="mr-2">🏫</span> Alber School
+            <a href="/" class="text-2xl font-black flex items-center tracking-tight hover:text-blue-200 transition">
+                <span class="mr-3 text-3xl">🏫</span> 
+                <div class="leading-tight">
+                    Alber School
+                    <span class="block text-xs font-light text-blue-300">Kutus Town</span>
+                </div>
             </a>
-            <div class="space-x-6 hidden md:flex">
-                <a href="/" class="hover:text-blue-200 transition">Home</a>
-                <a href="/admission" class="hover:text-blue-200 transition">Admission</a>
-                <a href="/students" class="hover:text-blue-200 transition">Students</a>
-                <a href="/pay-fees" class="bg-green-600 px-4 py-2 rounded-lg hover:bg-green-700 transition">Pay Fees</a>
+
+            <div class="space-x-8 hidden md:flex items-center font-medium">
+                <a href="/" class="hover:text-blue-300 transition border-b-2 border-transparent hover:border-blue-300 py-1">Home</a>
+                <a href="/about" class="hover:text-blue-300 transition border-b-2 border-transparent hover:border-blue-300 py-1">About Us</a>
+                <a href="/admission" class="hover:text-blue-300 transition border-b-2 border-transparent hover:border-blue-300 py-1">Admission</a>
+                <a href="/students" class="hover:text-blue-300 transition border-b-2 border-transparent hover:border-blue-300 py-1">Students</a>
+                
+                <a href="/pay-fees" class="bg-green-600 flex items-center gap-2 px-5 py-2.5 rounded-full font-bold hover:bg-green-700 transition transform hover:scale-105 shadow-lg">
+                    <span class="bg-white text-green-700 text-[10px] px-1 rounded">Ksh</span>
+                    Pay Fees
+                </a>
+            </div>
+
+            <div class="md:hidden flex space-x-4">
+                <a href="/pay-fees" class="text-green-400 font-bold">Pay</a>
+                <a href="/about" class="text-blue-200">About</a>
             </div>
         </div>
     </nav>
 
-    <main class="container mx-auto px-4 py-10">
+    <main class="container mx-auto px-4 py-10 flex-grow">
         {% block content %}{% endblock %}
     </main>
 
-    <footer class="bg-white border-t mt-20 py-8">
-        <div class="text-center text-gray-500 text-sm">
-            &copy; 2026 Alber School Kutus. Next to Governor's Office. All Rights Reserved.
+    <footer class="bg-white border-t mt-auto py-10">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <h4 class="font-bold text-blue-900 text-lg italic">Alber School Kutus</h4>
+                    <p class="text-gray-500 text-sm">Next to Governor's Office, Kutus, Kirinyaga County.</p>
+                </div>
+                
+                <div class="flex space-x-6 text-gray-400 text-sm">
+                    <a href="/about" class="hover:text-blue-900">Our Mission</a>
+                    <a href="/admission" class="hover:text-blue-900">Enrollment</a>
+                    <a href="/pay-fees" class="hover:text-blue-900">M-Pesa Support</a>
+                </div>
+            </div>
+            
+            <div class="mt-8 pt-8 border-t border-gray-100 text-center text-gray-400 text-xs tracking-widest uppercase">
+                &copy; 2026 Alber School Kutus. All Rights Reserved.
+            </div>
         </div>
     </footer>
 

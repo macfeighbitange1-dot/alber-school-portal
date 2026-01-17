@@ -1,0 +1,68 @@
+{% extends "layout.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 py-12">
+    <div class="text-center mb-16">
+        <h1 class="text-4xl font-extrabold text-blue-900 mb-4">Welcome to Alber School Kutus</h1>
+        <p class="text-xl text-gray-600">Empowering the next generation through CBC excellence and modern technology.</p>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-8 mb-16">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-blue-100 hover:shadow-md transition">
+            <div class="text-blue-600 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="9.663 17h4.674a1 1 0 00.958-.71l1.192-3.974A1 1 0 0015.527 11H8.474a1 1 0 00-.958.71l1.192 3.974A1 1 0 009.663 17z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364-6.364l-.707.707M6.343 17.657l-.707.707m12.728 0l-.707-.707M6.343 6.343l-.707-.707" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Smart AI Tutoring</h3>
+            <p class="text-gray-600 text-sm">Our local AI Teacher provides instant CBC-aligned homework help for Grade 1-6 students, even without an internet connection.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-green-100 hover:shadow-md transition">
+            <div class="text-green-600 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Easy M-Pesa Fees</h3>
+            <p class="text-gray-600 text-sm">Parents can pay school fees securely in seconds via our integrated STK Push system. No more queuing at the bank.</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-2xl shadow-sm border border-orange-100 hover:shadow-md transition">
+            <div class="text-orange-600 mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
+                </svg>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">CBC Focused</h3>
+            <p class="text-gray-600 text-sm">We strictly follow the Competency Based Curriculum, ensuring your child develops real-world skills and values.</p>
+        </div>
+    </div>
+
+    <div class="bg-blue-900 text-white rounded-3xl p-8 md:p-12">
+        <div class="grid md:grid-cols-2 gap-8 items-center">
+            <div>
+                <h2 class="text-3xl font-bold mb-4">Visit Us Today</h2>
+                <p class="mb-6 text-blue-100 italic">"Quality Education in the heart of Kirinyaga County."</p>
+                <div class="space-y-4">
+                    <p class="flex items-center">
+                        <span class="mr-3 font-bold">📍 Location:</span> Kutus Town, Next to the Governor's Office
+                    </p>
+                    <p class="flex items-center">
+                        <span class="mr-3 font-bold">📞 Phone:</span> +254 7XX XXX XXX
+                    </p>
+                    <p class="flex items-center">
+                        <span class="mr-3 font-bold">✉️ Email:</span> info@alberschoolkutus.com
+                    </p>
+                </div>
+            </div>
+            <div class="rounded-2xl overflow-hidden shadow-xl border-4 border-white/10">
+                <div class="bg-blue-800 h-48 flex items-center justify-center text-blue-300">
+                    <p class="text-center p-4">Google Maps View<br><span class="text-xs">Next to Governor's Office</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -7,8 +7,15 @@ portal = Blueprint('portal', __name__)
 
 @portal.route('/')
 def home():
-    """Main landing page for Alber School Kutus"""
-    return render_template('home.html')
+    """Main landing page for Alber School Kutus with enrollment stats"""
+    # Count total students to show on the dashboard
+    total_enrolled = Student.query.count()
+    return render_template('home.html', total_enrolled=total_enrolled)
+
+@portal.route('/about')
+def about():
+    """About page for Alber School Kutus"""
+    return render_template('about.html')
 
 @portal.route('/admission', methods=['GET', 'POST'])
 def admission():

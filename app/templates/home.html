@@ -3,27 +3,34 @@
 {% block content %}
 <div class="container mx-auto px-4 py-8">
     <div class="text-center mb-12">
-        <h1 class="text-5xl font-extrabold text-blue-900 mb-4">Alber School Kutus</h1>
-        <p class="text-xl text-gray-700 italic">Excellence in CBC Curriculum (Grade 1-9)</p>
+        <h1 class="text-5xl font-extrabold text-blue-900 mb-2">Alber School Kutus</h1>
+        <p class="text-xl text-gray-700 italic mb-6">Excellence in CBC Curriculum (Grade 1-9)</p>
+        
+        <div class="max-w-xs mx-auto mb-8 bg-gradient-to-br from-blue-700 to-blue-900 text-white p-6 rounded-2xl shadow-2xl transform hover:scale-105 transition duration-300">
+            <h3 class="text-xs uppercase tracking-widest opacity-80 font-bold">Total Enrolled Students</h3>
+            <p class="text-6xl font-black my-2">{{ total_enrolled }}</p>
+            <div class="h-1 w-12 bg-yellow-400 mx-auto rounded-full mb-2"></div>
+            <p class="text-xs font-medium">Building a brighter future in Kutus Town</p>
+        </div>
         
         <div class="mt-6 flex justify-center gap-4">
-            <a href="/admission" class="bg-blue-700 text-white px-6 py-2 rounded-full font-semibold hover:bg-blue-800 transition shadow-md">
-                📝 New Admission
+            <a href="/admission" class="bg-blue-700 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-800 transition shadow-lg flex items-center">
+                <span class="mr-2">📝</span> New Admission
             </a>
-            <a href="/students" class="bg-gray-800 text-white px-6 py-2 rounded-full font-semibold hover:bg-black transition shadow-md">
-                📋 Student List
+            <a href="/students" class="bg-gray-800 text-white px-8 py-3 rounded-full font-bold hover:bg-black transition shadow-lg flex items-center">
+                <span class="mr-2">📋</span> Student List
             </a>
         </div>
     </div>
 
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="border-4 border-blue-100 rounded-2xl overflow-hidden shadow-xl">
-            <h3 class="bg-blue-900 text-white p-3 font-semibold flex items-center">
-                <span class="mr-2">📍</span> Find Us (Next to Governor's Office, Kutus)
+        <div class="border-4 border-blue-100 rounded-3xl overflow-hidden shadow-xl">
+            <h3 class="bg-blue-900 text-white p-4 font-semibold flex items-center">
+                <span class="mr-2 text-xl">📍</span> Find Us (Next to Governor's Office, Kutus)
             </h3>
             <iframe 
                 width="100%" 
-                height="400" 
+                height="450" 
                 style="border:0" 
                 loading="lazy" 
                 allowfullscreen
@@ -32,39 +39,41 @@
             </iframe>
         </div>
 
-        <div class="bg-white p-8 rounded-2xl shadow-xl border border-gray-100">
-            <div class="flex items-center mb-6">
-                <span class="text-4xl mr-3">🤖</span>
-                <h2 class="text-2xl font-bold text-gray-800">AI Homework Helper</h2>
-            </div>
-            
-            <p class="text-sm text-gray-500 mb-4">Students: Ask any question based on the CBC curriculum.</p>
-            
-            <form hx-post="/api/ai-tutor" 
-                  hx-target="#ai-response" 
-                  hx-indicator="#loading"
-                  class="space-y-4">
-                <textarea 
-                    name="student_query" 
-                    rows="3"
-                    placeholder="e.g., 'Explain the parts of a plant' or 'What are the values of a good citizen?'" 
-                    class="w-full border-2 border-gray-200 p-3 rounded-xl focus:border-blue-500 focus:outline-none transition"
-                    required></textarea>
+        <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-between">
+            <div>
+                <div class="flex items-center mb-6">
+                    <div class="bg-blue-100 p-3 rounded-2xl mr-4 text-3xl">🤖</div>
+                    <h2 class="text-3xl font-bold text-gray-800">AI Homework Helper</h2>
+                </div>
                 
-                <button type="submit" class="w-full bg-blue-600 text-white font-bold py-3 rounded-xl hover:bg-blue-700 transition flex items-center justify-center">
-                    Ask Teacher AI
-                </button>
-            </form>
-            
-            <div id="loading" class="htmx-indicator mt-4 flex items-center justify-center text-blue-600 font-medium">
-                <svg class="animate-spin h-5 w-5 mr-3" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Teacher AI is thinking...
+                <p class="text-gray-600 mb-6">Ask Teacher AI any question based on the Kenyan CBC curriculum for Grade 1-9.</p>
+                
+                <form hx-post="/api/ai-tutor" 
+                      hx-target="#ai-response" 
+                      hx-indicator="#loading"
+                      class="space-y-4">
+                    <textarea 
+                        name="student_query" 
+                        rows="4"
+                        placeholder="e.g., 'Explain the importance of handwashing' or 'Solve 24 x 5'" 
+                        class="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition text-lg shadow-inner bg-gray-50"
+                        required></textarea>
+                    
+                    <button type="submit" class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl hover:bg-blue-700 hover:shadow-lg transition-all duration-300 flex items-center justify-center text-lg uppercase tracking-wider">
+                        Ask Teacher AI
+                    </button>
+                </form>
+                
+                <div id="loading" class="htmx-indicator mt-6 flex items-center justify-center text-blue-600 font-bold p-4 bg-blue-50 rounded-xl">
+                    <svg class="animate-spin h-6 w-6 mr-3" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    The teacher is thinking...
+                </div>
             </div>
             
-            <div id="ai-response" class="mt-6 text-gray-800">
+            <div id="ai-response" class="mt-8">
                 </div>
         </div>
     </div>
