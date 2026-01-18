@@ -4,78 +4,131 @@
 <div class="container mx-auto px-4 py-8">
     <div class="text-center mb-12">
         <h1 class="text-5xl font-extrabold text-blue-900 mb-2">Alber School Kutus</h1>
-        <p class="text-xl text-gray-700 italic mb-6">Excellence in CBC Curriculum (Grade 1-9)</p>
+        <p class="text-xl text-gray-700 italic mb-6">Innovative Technology for a Dynamic World</p>
         
-        <div class="max-w-xs mx-auto mb-8 bg-gradient-to-br from-blue-700 to-blue-900 text-white p-6 rounded-2xl shadow-2xl transform hover:scale-105 transition duration-300">
-            <h3 class="text-xs uppercase tracking-widest opacity-80 font-bold">Total Enrolled Students</h3>
-            <p class="text-6xl font-black my-2">{{ total_enrolled }}</p>
-            <div class="h-1 w-12 bg-yellow-400 mx-auto rounded-full mb-2"></div>
-            <p class="text-xs font-medium">Building a brighter future in Kutus Town</p>
+        <div class="flex flex-wrap justify-center gap-2 mb-8 text-sm font-medium">
+            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full border border-blue-200 shadow-sm">Online Admission</span>
+            <span class="bg-green-100 text-green-800 px-4 py-1 rounded-full border border-green-200 shadow-sm">M-Pesa Portal</span>
+            <span class="bg-purple-100 text-purple-800 px-4 py-1 rounded-full border border-purple-200 shadow-sm">CBC Masomo</span>
+            <span class="bg-orange-100 text-orange-800 px-4 py-1 rounded-full border border-orange-200 shadow-sm">Staff Portal</span>
         </div>
-        
+
         <div class="mt-6 flex justify-center gap-4">
-            <a href="/admission" class="bg-blue-700 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-800 transition shadow-lg flex items-center">
-                <span class="mr-2">📝</span> New Admission
+            <a href="/admission" class="bg-blue-700 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-800 transition shadow-lg flex items-center transform hover:-translate-y-1">
+                <span class="mr-2">📝</span> Apply Now
             </a>
-            <a href="/students" class="bg-gray-800 text-white px-8 py-3 rounded-full font-bold hover:bg-black transition shadow-lg flex items-center">
-                <span class="mr-2">📋</span> Student List
+            <a href="/about" class="bg-white text-blue-900 border-2 border-blue-900 px-8 py-3 rounded-full font-bold hover:bg-blue-50 transition shadow-lg flex items-center transform hover:-translate-y-1">
+                Why Study at Alber?
             </a>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
-        <div class="border-4 border-blue-100 rounded-3xl overflow-hidden shadow-xl">
-            <h3 class="bg-blue-900 text-white p-4 font-semibold flex items-center">
-                <span class="mr-2 text-xl">📍</span> Find Us (Next to Governor's Office, Kutus)
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-blue-600 text-center transition hover:shadow-md">
+            <p class="text-4xl font-black text-blue-900">{{ total_enrolled }}+</p>
+            <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mt-1">Students</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-green-600 text-center transition hover:shadow-md">
+            <p class="text-4xl font-black text-green-700">12+</p>
+            <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mt-1">CBC Staff</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-yellow-500 text-center transition hover:shadow-md">
+            <p class="text-4xl font-black text-yellow-600">9</p>
+            <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mt-1">Grade Levels</p>
+        </div>
+        <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-purple-600 text-center transition hover:shadow-md">
+            <p class="text-4xl font-black text-purple-700">100%</p>
+            <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mt-1">Integrity</p>
+        </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-16">
+        <div class="lg:col-span-1 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6 flex items-center">
+                <span class="mr-2 text-blue-600">🔔</span> News & Updates
             </h3>
-            <iframe 
-                width="100%" 
-                height="450" 
-                style="border:0" 
-                loading="lazy" 
-                allowfullscreen
-                referrerpolicy="no-referrer-when-downgrade"
-                src="https://www.google.com/maps/embed/v1/search?key={{ google_maps_key }}&q=Governor+Office+Kutus+Kirinyaga">
-            </iframe>
+            <div class="space-y-6">
+                <div class="flex gap-4 items-start border-b pb-4">
+                    <div class="bg-blue-900 text-white p-2 rounded text-center min-w-[60px]">
+                        <span class="block text-xl font-bold">20</span>
+                        <span class="text-[10px] uppercase">Jan</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-blue-900 hover:underline cursor-pointer">Term 1 Opening Dates</h4>
+                        <p class="text-xs text-gray-500 mt-1">Reporting for all Grade 1-9 students...</p>
+                    </div>
+                </div>
+                <div class="flex gap-4 items-start border-b pb-4">
+                    <div class="bg-gray-200 text-gray-700 p-2 rounded text-center min-w-[60px]">
+                        <span class="block text-xl font-bold">15</span>
+                        <span class="text-[10px] uppercase">Feb</span>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-blue-900 hover:underline cursor-pointer">Annual Music Festival</h4>
+                        <p class="text-xs text-gray-500 mt-1">Join us for a day of talent display...</p>
+                    </div>
+                </div>
+                <a href="#" class="text-blue-700 font-bold text-sm hover:underline">View All Events →</a>
+            </div>
         </div>
 
-        <div class="bg-white p-8 rounded-3xl shadow-xl border border-gray-100 flex flex-col justify-between">
-            <div>
-                <div class="flex items-center mb-6">
-                    <div class="bg-blue-100 p-3 rounded-2xl mr-4 text-3xl">🤖</div>
+        <div class="lg:col-span-2 bg-white p-8 rounded-3xl shadow-xl border border-gray-100">
+            <div class="flex items-center mb-6">
+                <div class="bg-blue-100 p-3 rounded-2xl mr-4 text-3xl">🤖</div>
+                <div>
                     <h2 class="text-3xl font-bold text-gray-800">AI Homework Helper</h2>
-                </div>
-                
-                <p class="text-gray-600 mb-6">Ask Teacher AI any question based on the Kenyan CBC curriculum for Grade 1-9.</p>
-                
-                <form hx-post="/api/ai-tutor" 
-                      hx-target="#ai-response" 
-                      hx-indicator="#loading"
-                      class="space-y-4">
-                    <textarea 
-                        name="student_query" 
-                        rows="4"
-                        placeholder="e.g., 'Explain the importance of handwashing' or 'Solve 24 x 5'" 
-                        class="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition text-lg shadow-inner bg-gray-50"
-                        required></textarea>
-                    
-                    <button type="submit" class="w-full bg-blue-600 text-white font-black py-4 rounded-2xl hover:bg-blue-700 hover:shadow-lg transition-all duration-300 flex items-center justify-center text-lg uppercase tracking-wider">
-                        Ask Teacher AI
-                    </button>
-                </form>
-                
-                <div id="loading" class="htmx-indicator mt-6 flex items-center justify-center text-blue-600 font-bold p-4 bg-blue-50 rounded-xl">
-                    <svg class="animate-spin h-6 w-6 mr-3" viewBox="0 0 24 24">
-                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                    </svg>
-                    The teacher is thinking...
+                    <p class="text-gray-500 text-sm italic">"Training human resources equipped with innovative skills"</p>
                 </div>
             </div>
             
-            <div id="ai-response" class="mt-8">
-                </div>
+            <form hx-post="/api/ai-tutor" 
+                  hx-target="#ai-response" 
+                  hx-indicator="#loading"
+                  class="space-y-4">
+                <textarea 
+                    name="student_query" 
+                    rows="4"
+                    placeholder="e.g., 'What are the core values of a good citizen?' or 'Explain the digestion process'" 
+                    class="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition text-lg bg-gray-50 shadow-inner"
+                    required></textarea>
+                
+                <button type="submit" class="w-full bg-blue-900 text-white font-black py-4 rounded-2xl hover:bg-black transition-all duration-300 flex items-center justify-center text-lg uppercase tracking-widest">
+                    Ask Teacher AI
+                </button>
+            </form>
+            
+            <div id="loading" class="htmx-indicator mt-6 flex items-center justify-center text-blue-600 font-bold p-4 bg-blue-50 rounded-xl">
+                <svg class="animate-spin h-6 w-6 mr-3" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                Teacher AI is processing your request...
+            </div>
+
+            <div id="ai-response" class="mt-8"></div>
         </div>
+    </div>
+
+    <div class="border-4 border-blue-50 rounded-3xl overflow-hidden shadow-2xl">
+        <div class="bg-blue-900 text-white p-6 md:flex justify-between items-center">
+            <div>
+                <h3 class="text-2xl font-bold">Visit Our Campus</h3>
+                <p class="text-blue-200">Located 115 Km North East of Nairobi, Kutus Town.</p>
+            </div>
+            <div class="mt-4 md:mt-0 text-sm">
+                <p>📍 Next to Governor's Office</p>
+                <p>📞 +254 7XX XXX XXX</p>
+            </div>
+        </div>
+        <iframe 
+            width="100%" 
+            height="400" 
+            style="border:0" 
+            loading="lazy" 
+            allowfullscreen
+            referrerpolicy="no-referrer-when-downgrade"
+            src="https://www.google.com/maps/embed/v1/place?key={{ google_maps_key }}&q=Governor+Office+Kutus+Kirinyaga">
+        </iframe>
     </div>
 </div>
 {% endblock %}
