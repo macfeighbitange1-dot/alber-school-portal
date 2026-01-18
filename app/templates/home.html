@@ -109,26 +109,34 @@
         </div>
     </div>
 
-    <div class="border-4 border-blue-50 rounded-3xl overflow-hidden shadow-2xl">
-        <div class="bg-blue-900 text-white p-6 md:flex justify-between items-center">
-            <div>
-                <h3 class="text-2xl font-bold">Visit Our Campus</h3>
-                <p class="text-blue-200">Located 115 Km North East of Nairobi, Kutus Town.</p>
+    <div class="bg-gradient-to-r from-blue-900 to-blue-800 rounded-3xl shadow-2xl p-1">
+        <div class="bg-white rounded-[1.4rem] p-8 md:flex items-center justify-between">
+            <div class="md:w-1/2 mb-6 md:mb-0">
+                <h3 class="text-3xl font-black text-blue-900 mb-4 tracking-tight">Our Location</h3>
+                <p class="text-gray-600 leading-relaxed mb-6">
+                    Alber School Kutus is strategically located in the serene environment of Kirinyaga County, 
+                    offering a perfect atmosphere for academic concentration and physical growth.
+                </p>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div class="flex items-center space-x-3 text-gray-700">
+                        <span class="bg-blue-100 p-2 rounded-lg text-blue-900">📍</span>
+                        <span class="text-sm font-semibold text-blue-900 uppercase">Kutus Town</span>
+                    </div>
+                    <div class="flex items-center space-x-3 text-gray-700">
+                        <span class="bg-blue-100 p-2 rounded-lg text-blue-900">🏛️</span>
+                        <span class="text-sm font-semibold text-blue-900 uppercase">Near Governor's Office</span>
+                    </div>
+                </div>
             </div>
-            <div class="mt-4 md:mt-0 text-sm">
-                <p>📍 Next to Governor's Office</p>
-                <p>📞 +254 7XX XXX XXX</p>
+            
+            <div class="md:w-1/3 bg-blue-50 rounded-2xl p-6 border-2 border-dashed border-blue-200">
+                <h4 class="font-bold text-blue-900 mb-2 uppercase text-xs tracking-widest">Contact Information</h4>
+                <p class="text-lg font-bold text-gray-800">+254 7XX XXX XXX</p>
+                <p class="text-sm text-gray-500 mb-4">info@alberschoolkutus.ac.ke</p>
+                <hr class="mb-4">
+                <p class="text-xs text-gray-400">P.O. Box 143-10300, Kerugoya - Kutus Highway.</p>
             </div>
         </div>
-        <iframe 
-            width="100%" 
-            height="400" 
-            style="border:0" 
-            loading="lazy" 
-            allowfullscreen
-            referrerpolicy="no-referrer-when-downgrade"
-            src="https://www.google.com/maps/embed/v1/place?key={{ google_maps_key }}&q=Governor+Office+Kutus+Kirinyaga">
-        </iframe>
     </div>
 </div>
 {% endblock %}
