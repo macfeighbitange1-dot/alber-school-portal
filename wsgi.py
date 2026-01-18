@@ -1,6 +1,6 @@
 from app import create_app
 
-# Gunicorn will look for this 'app' variable
+# This is the variable Gunicorn is looking for
 app = create_app()
 
 if __name__ == "__main__":
