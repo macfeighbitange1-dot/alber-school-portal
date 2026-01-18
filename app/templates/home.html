@@ -54,18 +54,8 @@
                         <span class="text-[10px] uppercase">Jan</span>
                     </div>
                     <div>
-                        <h4 class="font-bold text-sm text-blue-900 hover:underline cursor-pointer">Term 1 Opening Dates</h4>
-                        <p class="text-xs text-gray-500 mt-1">Reporting for all Grade 1-9 students...</p>
-                    </div>
-                </div>
-                <div class="flex gap-4 items-start border-b pb-4">
-                    <div class="bg-gray-200 text-gray-700 p-2 rounded text-center min-w-[60px]">
-                        <span class="block text-xl font-bold">15</span>
-                        <span class="text-[10px] uppercase">Feb</span>
-                    </div>
-                    <div>
-                        <h4 class="font-bold text-sm text-blue-900 hover:underline cursor-pointer">Annual Music Festival</h4>
-                        <p class="text-xs text-gray-500 mt-1">Join us for a day of talent display...</p>
+                        <h4 class="font-bold text-sm text-blue-900 hover:underline cursor-pointer">Term 1 Opening</h4>
+                        <p class="text-xs text-gray-500 mt-1">Reporting for all students...</p>
                     </div>
                 </div>
                 <a href="#" class="text-blue-700 font-bold text-sm hover:underline">View All Events →</a>
@@ -77,34 +67,20 @@
                 <div class="bg-blue-100 p-3 rounded-2xl mr-4 text-3xl">🤖</div>
                 <div>
                     <h2 class="text-3xl font-bold text-gray-800">AI Homework Helper</h2>
-                    <p class="text-gray-500 text-sm italic">"Training human resources equipped with innovative skills"</p>
+                    <p class="text-gray-500 text-sm italic">"Innovative skills for a dynamic world"</p>
                 </div>
             </div>
             
-            <form hx-post="/api/ai-tutor" 
-                  hx-target="#ai-response" 
-                  hx-indicator="#loading"
-                  class="space-y-4">
-                <textarea 
-                    name="student_query" 
-                    rows="4"
-                    placeholder="e.g., 'What are the core values of a good citizen?' or 'Explain the digestion process'" 
-                    class="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-blue-500 focus:ring-4 focus:ring-blue-50/50 outline-none transition text-lg bg-gray-50 shadow-inner"
-                    required></textarea>
-                
-                <button type="submit" class="w-full bg-blue-900 text-white font-black py-4 rounded-2xl hover:bg-black transition-all duration-300 flex items-center justify-center text-lg uppercase tracking-widest">
+            <form hx-post="/api/ai-tutor" hx-target="#ai-response" hx-indicator="#loading" class="space-y-4">
+                <textarea name="student_query" rows="4" placeholder="Ask Teacher AI a question..." class="w-full border-2 border-gray-100 p-4 rounded-2xl focus:border-blue-500 outline-none bg-gray-50 shadow-inner" required></textarea>
+                <button type="submit" class="w-full bg-blue-900 text-white font-black py-4 rounded-2xl hover:bg-black transition-all flex items-center justify-center text-lg uppercase tracking-widest">
                     Ask Teacher AI
                 </button>
             </form>
             
             <div id="loading" class="htmx-indicator mt-6 flex items-center justify-center text-blue-600 font-bold p-4 bg-blue-50 rounded-xl">
-                <svg class="animate-spin h-6 w-6 mr-3" viewBox="0 0 24 24">
-                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Teacher AI is processing your request...
+                Teacher AI is processing...
             </div>
-
             <div id="ai-response" class="mt-8"></div>
         </div>
     </div>
@@ -114,27 +90,24 @@
             <div class="md:w-1/2 mb-6 md:mb-0">
                 <h3 class="text-3xl font-black text-blue-900 mb-4 tracking-tight">Our Location</h3>
                 <p class="text-gray-600 leading-relaxed mb-6">
-                    Alber School Kutus is strategically located in the serene environment of Kirinyaga County, 
-                    offering a perfect atmosphere for academic concentration and physical growth.
+                    Alber School Kutus is located in Kirinyaga County, offering a serene environment for CBC learning.
                 </p>
                 <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div class="flex items-center space-x-3 text-gray-700">
                         <span class="bg-blue-100 p-2 rounded-lg text-blue-900">📍</span>
-                        <span class="text-sm font-semibold text-blue-900 uppercase">Kutus Town</span>
+                        <span class="text-sm font-semibold uppercase">Kutus Town</span>
                     </div>
                     <div class="flex items-center space-x-3 text-gray-700">
                         <span class="bg-blue-100 p-2 rounded-lg text-blue-900">🏛️</span>
-                        <span class="text-sm font-semibold text-blue-900 uppercase">Near Governor's Office</span>
+                        <span class="text-sm font-semibold uppercase">Near Governor's Office</span>
                     </div>
                 </div>
             </div>
             
             <div class="md:w-1/3 bg-blue-50 rounded-2xl p-6 border-2 border-dashed border-blue-200">
-                <h4 class="font-bold text-blue-900 mb-2 uppercase text-xs tracking-widest">Contact Information</h4>
+                <h4 class="font-bold text-blue-900 mb-2 uppercase text-[10px] tracking-widest">Contact Info</h4>
                 <p class="text-lg font-bold text-gray-800">+254 7XX XXX XXX</p>
-                <p class="text-sm text-gray-500 mb-4">info@alberschoolkutus.ac.ke</p>
-                <hr class="mb-4">
-                <p class="text-xs text-gray-400">P.O. Box 143-10300, Kerugoya - Kutus Highway.</p>
+                <p class="text-xs text-gray-500">P.O. Box 143-10300, Kerugoya.</p>
             </div>
         </div>
     </div>
