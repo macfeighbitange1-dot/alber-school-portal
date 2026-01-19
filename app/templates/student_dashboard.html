@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto p-6">
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-3xl font-bold text-gray-800">Student Portal</h1>
+        <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full text-sm font-semibold">
+            {{ student.admission_no }}
+        </span>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <h2 class="text-xl font-semibold mb-4 text-blue-600">Personal Info</h2>
+            <p class="text-gray-600"><strong>Name:</strong> {{ student.full_name }}</p>
+            <p class="text-gray-600"><strong>Grade:</strong> CBC {{ student.cbc_grade }}</p>
+            <p class="text-gray-600"><strong>Parent:</strong> {{ student.parent_phone }}</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <h2 class="text-xl font-semibold mb-4 text-green-600">Financial Summary</h2>
+            <div class="text-3xl font-bold mb-2">KES {{ "%.2f"|format(student.fees|sum(attribute='amount')) }}</div>
+            <p class="text-sm text-gray-500">Total Fees Paid to Date</p>
+            <a href="{{ url_for('portal.pay_fees') }}" class="mt-4 inline-block bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600">
+                Pay Fees via M-Pesa
+            </a>
+        </div>
+
+        <div class="md:col-span-2 bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <h2 class="text-xl font-semibold mb-4 text-red-600">School Notifications</h2>
+            {% for note in notifications %}
+            <div class="mb-4 p-4 bg-red-50 rounded-lg border-l-4 border-red-500">
+                <h3 class="font-bold text-gray-800">{{ note.title }}</h3>
+                <p class="text-gray-600">{{ note.message }}</p>
+                <small class="text-gray-400">{{ note.created_at.strftime('%Y-%m-%d') }}</small>
+            </div>
+            {% else %}
+            <p class="text-gray-400 italic">No new messages from administration.</p>
+            {% endfor %}
+        </div>
+
+        <div class="md:col-span-2 bg-white p-6 rounded-xl shadow-md border border-gray-100">
+            <h2 class="text-xl font-semibold mb-4 text-purple-600">Academic Reports</h2>
+            <div class="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <span>Term 1 2026 Evaluation Report</span>
+                <button class="text-blue-500 font-bold hover:underline">Download PDF</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+{% endblock %}

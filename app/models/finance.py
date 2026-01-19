@@ -1,27 +1,51 @@
 import uuid
 from datetime import datetime, timezone
 from typing import List, Optional
-from sqlalchemy import ForeignKey, String, Integer, DateTime, Numeric
+from sqlalchemy import ForeignKey, String, Integer, DateTime, Numeric, Text
 from sqlalchemy.orm import Mapped, mapped_column, relationship
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
 
-# IMPORTANT: We import the 'db' from the app, NOT create a new one here
+# Import the db from your app factory
 from app import db 
+
+class User(db.Model, UserMixin):
+    __tablename__ = 'users'
+    
+    id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    username: Mapped[str] = mapped_column(String(50), unique=True, nullable=False, index=True)
+    password_hash: Mapped[str] = mapped_column(String(200), nullable=False)
+    role: Mapped[str] = mapped_column(String(20), default="student") # 'admin' or 'student'
+    
+    # One-to-One: If this user is a student, they have a student profile
+    student_profile: Mapped[Optional["Student"]] = relationship(back_populates="user", uselist=False)
+
+    def set_password(self, password):
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        return check_password_hash(self.password_hash, password)
 
 class Student(db.Model):
     __tablename__ = 'students'
 
-    # Note: Using String/TEXT for ID to ensure compatibility with SQLite
     id: Mapped[uuid.UUID] = mapped_column(primary_key=True, default=uuid.uuid4)
+    user_id: Mapped[uuid.UUID] = mapped_column(ForeignKey("users.id"), nullable=True)
+    
     full_name: Mapped[str] = mapped_column(String(100), nullable=False)
+    admission_no: Mapped[str] = mapped_column(String(20), unique=True, nullable=False)
     cbc_grade: Mapped[int] = mapped_column(Integer, nullable=False)
-    parent_phone: Mapped[str] = mapped_column(String(15), unique=True, nullable=False, index=True)
-    admission_date: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
-
+    parent_phone: Mapped[str] = mapped_column(String(15), nullable=False)
+    
+    # Academic Data
+    current_report_url: Mapped[Optional[str]] = mapped_column(String(255)) # Link to PDF/Report
+    
     # Relationships
+    user: Mapped[Optional["User"]] = relationship(back_populates="student_profile")
     fees: Mapped[List["FeeTransaction"]] = relationship(back_populates="student", cascade="all, delete-orphan")
 
     def __repr__(self):
-        return f"<Student {self.full_name} - Grade {self.cbc_grade}>"
+        return f"<Student {self.full_name} - {self.admission_no}>"
 
 class FeeTransaction(db.Model):
     __tablename__ = 'fee_transactions'
@@ -34,10 +58,14 @@ class FeeTransaction(db.Model):
     status: Mapped[str] = mapped_column(String(20), default="Pending")
     
     timestamp: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
-    updated_at: Mapped[datetime] = mapped_column(DateTime, onupdate=lambda: datetime.now(timezone.utc))
 
-    # Relationships
     student: Mapped["Student"] = relationship(back_populates="fees")
 
-    def __repr__(self):
-        return f"<Transaction {self.mpesa_receipt_number} - {self.status}>"
+class Notification(db.Model):
+    __tablename__ = 'notifications'
+    
+    id: Mapped[int] = mapped_column(Integer, primary_key=True)
+    title: Mapped[str] = mapped_column(String(100), nullable=False)
+    message: Mapped[str] = mapped_column(Text, nullable=False)
+    target_role: Mapped[str] = mapped_column(String(20), default="student") # Who sees this?
+    created_at: Mapped[datetime] = mapped_column(DateTime, default=lambda: datetime.now(timezone.utc))
