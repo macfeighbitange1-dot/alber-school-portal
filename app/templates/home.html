@@ -7,14 +7,14 @@
         <p class="text-xl text-gray-700 italic mb-6">Innovative Technology for a Dynamic World</p>
         
         <div class="flex flex-wrap justify-center gap-2 mb-8 text-sm font-medium">
-            <span class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full border border-blue-200 shadow-sm">Online Admission</span>
-            <span class="bg-green-100 text-green-800 px-4 py-1 rounded-full border border-green-200 shadow-sm">M-Pesa Portal</span>
-            <span class="bg-purple-100 text-purple-800 px-4 py-1 rounded-full border border-purple-200 shadow-sm">CBC Masomo</span>
-            <span class="bg-orange-100 text-orange-800 px-4 py-1 rounded-full border border-orange-200 shadow-sm">Staff Portal</span>
+            <a href="{{ url_for('portal.admission') }}" class="bg-blue-100 text-blue-800 px-4 py-1 rounded-full border border-blue-200 shadow-sm hover:bg-blue-200 transition">Online Admission</a>
+            <a href="{{ url_for('portal.pay_fees') }}" class="bg-green-100 text-green-800 px-4 py-1 rounded-full border border-green-200 shadow-sm hover:bg-green-200 transition">M-Pesa Portal</a>
+            <a href="{{ url_for('portal.dashboard') }}" class="bg-purple-100 text-purple-800 px-4 py-1 rounded-full border border-purple-200 shadow-sm hover:bg-purple-200 transition">CBC Masomo</a>
+            <a href="{{ url_for('portal.list_students') }}" class="bg-orange-100 text-orange-800 px-4 py-1 rounded-full border border-orange-200 shadow-sm hover:bg-orange-200 transition">Staff Portal</a>
         </div>
 
         <div class="mt-6 flex justify-center gap-4">
-            <a href="/admission" class="bg-blue-700 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-800 transition shadow-lg flex items-center transform hover:-translate-y-1">
+            <a href="{{ url_for('portal.admission') }}" class="bg-blue-700 text-white px-8 py-3 rounded-full font-bold hover:bg-blue-800 transition shadow-lg flex items-center transform hover:-translate-y-1">
                 <span class="mr-2">📝</span> Apply Now
             </a>
             <a href="/about" class="bg-white text-blue-900 border-2 border-blue-900 px-8 py-3 rounded-full font-bold hover:bg-blue-50 transition shadow-lg flex items-center transform hover:-translate-y-1">
@@ -25,7 +25,7 @@
 
     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-16">
         <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-blue-600 text-center transition hover:shadow-md">
-            <p class="text-4xl font-black text-blue-900">{{ total_enrolled }}+</p>
+            <p class="text-4xl font-black text-blue-900">{{ total_enrolled or 0 }}+</p>
             <p class="text-xs text-gray-500 uppercase font-bold tracking-widest mt-1">Students</p>
         </div>
         <div class="bg-white p-6 rounded-2xl shadow-sm border-b-4 border-green-600 text-center transition hover:shadow-md">
@@ -81,10 +81,10 @@
             <div id="loading" class="htmx-indicator mt-6 flex items-center justify-center text-blue-600 font-bold p-4 bg-blue-50 rounded-xl">
                 Teacher AI is processing...
             </div>
-            <div id="ai-response" class="mt-8"></div>
+            <div id="ai-response" class="mt-8 prose max-w-none text-gray-800"></div>
         </div>
     </div>
-
+    
     <div class="bg-gradient-to-r from-blue-900 to-blue-800 rounded-3xl shadow-2xl p-1">
         <div class="bg-white rounded-[1.4rem] p-8 md:flex items-center justify-between">
             <div class="md:w-1/2 mb-6 md:mb-0">

@@ -5,7 +5,7 @@ from flask_login import LoginManager
 import os
 from dotenv import load_dotenv
 
-# Load variables from .env
+# Load environment variables
 load_dotenv()
 
 # Initialize extensions
@@ -16,8 +16,12 @@ login_manager = LoginManager()
 def create_app():
     app = Flask(__name__)
     
-    # 1. Configuration
-    database_url = os.environ.get('SQLALCHEMY_DATABASE_URI') or os.environ.get('DATABASE_URL')
+    # 1. Configuration logic
+    database_url = os.environ.get('DATABASE_URL') or os.environ.get('SQLALCHEMY_DATABASE_URI')
+    # Fix for Render/Heroku postgres URLs (they often start with postgres:// instead of postgresql://)
+    if database_url and database_url.startswith("postgres://"):
+        database_url = database_url.replace("postgres://", "postgresql://", 1)
+    
     if not database_url:
         database_url = 'sqlite:///school.db'
         
@@ -31,16 +35,15 @@ def create_app():
     
     # Setup Flask-Login
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login' # Redirects users here if they aren't logged in
+    login_manager.login_view = 'auth.login'
     login_manager.login_message_category = "info"
     
-    # 3. Import Models
+    # 3. Import Models (Ensures they are registered with SQLAlchemy)
     from app.models.finance import Student, User, Notification, FeeTransaction
 
-    # User Loader for Flask-Login
     @login_manager.user_loader
     def load_user(user_id):
-        return User.query.get(user_id)
+        return User.query.get(int(user_id))
     
     # 4. Register Blueprints
     from app.routes import auth, portal, api, payments_bp
@@ -49,22 +52,22 @@ def create_app():
     app.register_blueprint(api, url_prefix='/api')
     app.register_blueprint(payments_bp) 
 
-    # 5. Database Initialization & Seeding
+    # 5. Database Initialization & Seeding logic
     with app.app_context():
         try:
             db.create_all()
             
-            # --- SEEDING FAKE DATA ---
             # Create an Admin if none exists
             if not User.query.filter_by(role='admin').first():
                 admin = User(username="admin", role="admin")
-                admin.set_password("admin123") # Default password
+                admin.set_password("admin123")
                 db.session.add(admin)
-                print("✅ Created Admin: user: admin, pass: admin123")
+                db.session.commit()
+                print("✅ Admin created: admin/admin123")
 
             # Create Fake Students if none exist
             if not Student.query.first():
-                # Create User Accounts for Students
+                # Create Student User Accounts
                 s1_user = User(username="john_doe", role="student")
                 s1_user.set_password("student123")
                 
@@ -72,9 +75,9 @@ def create_app():
                 s2_user.set_password("student123")
 
                 db.session.add_all([s1_user, s2_user])
-                db.session.flush() # Gets the IDs for the relationships
+                db.session.flush() # Flushes to get IDs for the profiles
 
-                # Create Student Profiles
+                # Create the Student Profiles linked to Users
                 s1 = Student(
                     full_name="John Doe", 
                     admission_no="2026/001", 
@@ -90,18 +93,19 @@ def create_app():
                     user_id=s2_user.id
                 )
                 
-                # Add a Fake Notification
+                # Create a welcome notification
                 note = Notification(
                     title="Term 1 Opening",
-                    message="Welcome back! School reopens on Jan 5th. Please clear your fees.",
+                    message="Welcome to Alber School Kutus! Please check your fee balance for Term 1.",
                     target_role="student"
                 )
 
                 db.session.add_all([s1, s2, note])
                 db.session.commit()
-                print("✅ Seeded fake students and notifications!")
+                print("✅ Seeded fake data (Students & Notifications)")
 
         except Exception as e:
-            print(f"❌ Error during startup: {e}")
+            db.session.rollback()
+            print(f"❌ Database error on startup: {e}")
     
     return app
