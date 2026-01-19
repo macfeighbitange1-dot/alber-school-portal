@@ -14,9 +14,16 @@ migrate = Migrate()
 def create_app():
     app = Flask(__name__)
     
-    # 1. Configuration
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv('DATABASE_URL')
-    app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
+    # 1. Smarter Configuration
+    # This checks Render's environment variable first, then DATABASE_URL, 
+    # and finally falls back to a local sqlite file so it NEVER crashes.
+    database_url = os.environ.get('SQLALCHEMY_DATABASE_URI') or os.environ.get('DATABASE_URL')
+    
+    if not database_url:
+        database_url = 'sqlite:///school.db'
+        
+    app.config['SQLALCHEMY_DATABASE_URI'] = database_url
+    app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-key-123')
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     
     # 2. Initialize Plugins
@@ -24,10 +31,10 @@ def create_app():
     migrate.init_app(app, db)
     
     # 3. Import Models (Critical for database visibility)
+    # Ensure these paths match your folder structure exactly
     from app.models.finance import Student, FeeTransaction
     
     # 4. Register Blueprints
-    # We import the objects from app.routes
     from app.routes import auth, portal, api, payments_bp
     
     app.register_blueprint(auth)
