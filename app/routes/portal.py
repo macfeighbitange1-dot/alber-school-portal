@@ -1,9 +1,9 @@
 import os
-from flask import render_template, request, redirect, url_for, flash, abort, Blueprint
+from flask import render_template, request, redirect, url_for, flash, Blueprint
 from flask_login import login_required, current_user
 from app.models.finance import Student, db, Notification, FeeTransaction
 from functools import wraps
-from mistralai import Mistral # Updated import for 2026 syntax
+from mistralai import Mistral
 
 # Define the blueprint
 portal = Blueprint('portal', __name__)
@@ -22,7 +22,10 @@ def admin_required(f):
 @portal.route('/')
 def home():
     """Main landing page for Alber School Kutus"""
-    total_enrolled = Student.query.count()
+    try:
+        total_enrolled = Student.query.count()
+    except:
+        total_enrolled = 0
     return render_template('home.html', total_enrolled=total_enrolled)
 
 @portal.route('/about')
@@ -41,23 +44,16 @@ def ai_tutor():
         return '<div class="p-4 bg-yellow-100 text-yellow-800 rounded-lg">AI Error: API Key missing in environment.</div>'
 
     try:
-        # Initializing the new 2026 Mistral Client
         client = Mistral(api_key=api_key)
-        
         chat_response = client.chat.complete(
             model="mistral-small-latest",
             messages=[
-                {"role": "system", "content": "You are Teacher AI, a friendly and helpful tutor for CBC students at Alber School Kutus."},
+                {"role": "system", "content": "You are Teacher AI, a tutor for Alber School Kutus."},
                 {"role": "user", "content": user_query}
             ]
         )
         answer = chat_response.choices[0].message.content
-        
-        return f'''
-        <div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-inner prose max-w-none">
-            <p class="text-blue-900 leading-relaxed">{answer}</p>
-        </div>
-        '''
+        return f'<div class="bg-blue-50 p-6 rounded-2xl border border-blue-100 shadow-inner prose max-w-none"><p class="text-blue-900">{answer}</p></div>'
     except Exception as e:
         return f'<div class="p-4 bg-red-100 text-red-800 rounded-lg">Teacher AI Error: {str(e)}</div>'
 
@@ -66,7 +62,6 @@ def ai_tutor():
 @login_required
 @admin_required
 def admission():
-    """Handles new registrations"""
     if request.method == 'POST':
         full_name = request.form.get('full_name')
         cbc_grade = request.form.get('cbc_grade')
@@ -82,54 +77,32 @@ def admission():
             )
             db.session.add(new_student)
             db.session.commit()
-            
-            return f'''
-            <div class="p-4 bg-green-100 text-green-800 rounded-lg shadow-sm">
-                ✅ Success! {full_name} admitted as {admission_no}.
-                <a href="/students" class="underline font-bold ml-2">View List</a>
-            </div>
-            '''
+            return f'<div class="p-4 bg-green-100 text-green-800 rounded-lg shadow-sm">✅ Success! {full_name} admitted. <a href="/students" class="underline font-bold ml-2">View List</a></div>'
         except Exception as e:
             db.session.rollback()
             return f'<div class="p-4 bg-red-100 text-red-800 rounded-lg">❌ Error: {str(e)}</div>'
-
     return render_template('admission.html')
 
 @portal.route('/students')
 @login_required
 @admin_required
 def list_students():
-    """Staff view of all students"""
     all_students = Student.query.order_by(Student.admission_no.asc()).all()
     return render_template('students.html', students=all_students)
-
-@portal.route('/post-notification', methods=['POST'])
-@login_required
-@admin_required
-def post_notification():
-    """Admin route to broadcast messages to student dashboards"""
-    title = request.form.get('title')
-    message = request.form.get('message')
-    
-    try:
-        new_notif = Notification(title=title, message=message, target_role='student')
-        db.session.add(new_notif)
-        db.session.commit()
-        return '<div class="text-green-600 font-bold p-2 bg-green-50 rounded">✅ Broadcast sent successfully!</div>'
-    except Exception as e:
-        return f'<div class="text-red-600 p-2 bg-red-50 rounded">❌ Failed to send: {str(e)}</div>'
 
 # --- STUDENT ONLY ROUTES ---
 @portal.route('/dashboard')
 @login_required
 def dashboard():
-    """Personal portal for students"""
+    # If Admin clicks this, redirect them to the staff view
     if current_user.role == 'admin':
         return redirect(url_for('portal.list_students'))
     
-    student = current_user.student_profile
+    # Safe check for student profile to prevent 500 Error
+    student = getattr(current_user, 'student_profile', None)
+    
     if not student:
-        flash("Student profile not found. Please contact administration.", "warning")
+        flash("Student profile not found. Please contact the Admin.", "warning")
         return redirect(url_for('portal.home'))
     
     notifications = Notification.query.filter_by(target_role='student').order_by(Notification.created_at.desc()).all()
@@ -143,5 +116,8 @@ def dashboard():
 @portal.route('/pay-fees')
 @login_required
 def pay_fees():
-    """Student fee payment page"""
-    return render_template('pay_fees.html', student=current_user.student_profile)
+    student = getattr(current_user, 'student_profile', None)
+    if not student:
+        flash("You need a student profile to access the payment portal.", "danger")
+        return redirect(url_for('portal.home'))
+    return render_template('pay_fees.html', student=student)
