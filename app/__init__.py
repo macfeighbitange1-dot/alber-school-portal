@@ -18,7 +18,8 @@ def create_app():
     
     # 1. Configuration logic
     database_url = os.environ.get('DATABASE_URL') or os.environ.get('SQLALCHEMY_DATABASE_URI')
-    # Fix for Render/Heroku postgres URLs (they often start with postgres:// instead of postgresql://)
+    
+    # Standardize Postgres URL for SQLAlchemy 1.4+
     if database_url and database_url.startswith("postgres://"):
         database_url = database_url.replace("postgres://", "postgresql://", 1)
     
@@ -35,29 +36,43 @@ def create_app():
     
     # Setup Flask-Login
     login_manager.init_app(app)
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = 'auth.login'  # Matches the 'auth' blueprint + 'login' function
     login_manager.login_message_category = "info"
     
-    # 3. Import Models (Ensures they are registered with SQLAlchemy)
+    # 3. Import Models
     from app.models.finance import Student, User, Notification, FeeTransaction
 
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
     
-    # 4. Register Blueprints
-    from app.routes import auth, portal, api, payments_bp
-    app.register_blueprint(auth)
-    app.register_blueprint(portal)
-    app.register_blueprint(api, url_prefix='/api')
-    app.register_blueprint(payments_bp) 
+    # 4. Register Blueprints (Fixed Explicit Imports)
+    # We import the actual Blueprint objects from the route files
+    from app.routes.auth import auth as auth_bp
+    from app.routes.portal import portal as portal_bp
+    
+    app.register_blueprint(auth_bp)
+    app.register_blueprint(portal_bp)
+
+    # Optional: Register API and Payments if files exist
+    try:
+        from app.routes import api as api_bp
+        app.register_blueprint(api_bp, url_prefix='/api')
+    except ImportError:
+        pass
+
+    try:
+        from app.routes import payments_bp
+        app.register_blueprint(payments_bp)
+    except ImportError:
+        pass
 
     # 5. Database Initialization & Seeding logic
     with app.app_context():
         try:
             db.create_all()
             
-            # Create an Admin if none exists
+            # Create Admin if missing
             if not User.query.filter_by(role='admin').first():
                 admin = User(username="admin", role="admin")
                 admin.set_password("admin123")
@@ -65,9 +80,8 @@ def create_app():
                 db.session.commit()
                 print("✅ Admin created: admin/admin123")
 
-            # Create Fake Students if none exist
+            # Create Students if missing
             if not Student.query.first():
-                # Create Student User Accounts
                 s1_user = User(username="john_doe", role="student")
                 s1_user.set_password("student123")
                 
@@ -75,9 +89,8 @@ def create_app():
                 s2_user.set_password("student123")
 
                 db.session.add_all([s1_user, s2_user])
-                db.session.flush() # Flushes to get IDs for the profiles
+                db.session.flush() 
 
-                # Create the Student Profiles linked to Users
                 s1 = Student(
                     full_name="John Doe", 
                     admission_no="2026/001", 
@@ -93,19 +106,18 @@ def create_app():
                     user_id=s2_user.id
                 )
                 
-                # Create a welcome notification
                 note = Notification(
                     title="Term 1 Opening",
-                    message="Welcome to Alber School Kutus! Please check your fee balance for Term 1.",
+                    message="Welcome to Alber School Kutus! Please clear your fees.",
                     target_role="student"
                 )
 
                 db.session.add_all([s1, s2, note])
                 db.session.commit()
-                print("✅ Seeded fake data (Students & Notifications)")
+                print("✅ Seeded fake data!")
 
         except Exception as e:
             db.session.rollback()
-            print(f"❌ Database error on startup: {e}")
+            print(f"❌ Startup Error: {e}")
     
     return app
