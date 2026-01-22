@@ -2,7 +2,6 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, login_required, current_user
 from app.models.finance import User, db
 
-# CRITICAL: The first 'auth' here is the "nickname" Flask uses in url_for
 auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
@@ -21,7 +20,11 @@ def login():
         
         flash('Invalid username or password', 'danger')
     
-    return render_template('login.html')
+    # Try 'login.html'. If it fails, try 'auth/login.html'
+    try:
+        return render_template('login.html')
+    except:
+        return render_template('auth/login.html')
 
 @auth.route('/logout')
 @login_required
